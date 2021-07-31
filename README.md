@@ -146,12 +146,50 @@ Actions:
 
 _Note: If executed without options, the program will try to inject in an active mstsc.exe process (the default wait time is 10 seconds)_
 
+## CheeseSQL
+Command Exec / Lateral Movement via MSSQL Trust. 
+This tool has been developed to overcome some of the limitations given by already existing tools like [esc](https://github.com/NetSPI/ESC), mostly regarding MSSQL impersonation.
+Moreover, CheeseSQL has been specifically modified to run from Covenant (via reflective loading), and to automate the most important phases of MSSQL trust abuse.
+Particuarly funny is the implementation of the CLR abuse, which allow a user to compile and upload a MSSQL extension on the fly with Roslyn to achieve command execution.
+A very little demo is shown below, the command executed is an encoded PowerShell Covenant downloader):
+
+![CheeseSQL CLR Attack](./assets/cheesesql-clr.gif)
+
+Following my rule of "always give credit when credit is due", this tool has been developed starting from an already existing project 
+by [Jb05s](https://github.com/Jb05s), called [SharpSQL](https://github.com/Jb05s/SharpCollection/tree/master/SharpSQL), so big shout out to Jeremy for his work.
+
+Also, I really recommend to see all the tools from [NetSPI](https://twitter.com/netspi) regarding MSSQL auditing and exploitation, as they are really amazing:
+
+- [esc](https://github.com/NetSPI/ESC): interactive .NET SQL console client with enhanced SQL Server discovery, access, and data exfiltration features
+- [DAFT](https://github.com/NetSPI/DAFT): database auditing and assessment toolkit written in C#
+- [PowerUpSQL](https://github.com/NetSPI/PowerUpSQL): PowerSHell module for SQL Server discovery, auditing, and exploitation
+
+```
+[*] List of available commands:
+  - findspn             : Find MSSQL Instances, using Domain SPNs
+  - listdb              : List available Databases on the server
+  - gethash             : Send Service Account Net-NTLM Hash to an Arbitrary IP
+  - getlogin            : Retrieve SQL Logins Available for Impersonation
+  - getdbuser           : Retrieve Information on the SQL Login, Currently Mapped User, and Available User Roles
+  - getlinked           : Retrieve Information about Linked Servers
+  - getserverinfo       : Retrieve current values of 'xp_cmdshell', 'ole automation procedures' and 'clr enabled'
+  - xp                  : Execute Encoded PowerShell Command via 'xp_cmdshell'
+  - ole                 : Execute Encoded PowerShell Command via 'sp_OACreate' and 'sp_OAMethod'
+  - clr                 : Execute Encoded PowerShell Command via custom .NET assemblies
+  - rpc                 : Configure Linked SQL Server to Allow RPC connections
+  - linkedquery         : Execute Encoded PowerShell Command on Linked SQL Server via 'OPENQUERY'
+  - openquery           : Execute an arbitrary query using 'OPENQUERY'
+
+[*] For detailed usage, type:
+  - CheeseSQL <command> /help
+```
+
 ## Credits
 - [MiscTool][1] by [rasta-mouse](https://github.com/rasta-mouse)
 - [AmsiBypass][6] by [0xB455](https://github.com/0xB455)
 - [RdpThief][8] by [0x90AL](https://github.com/0x09AL)
 - [SharpRDPThief][9] by [passthehashbrowns](https://github.com/passthehashbrowns)
-
+- [SharpSQL](https://github.com/Jb05s/SharpCollection/tree/master/SharpSQL) by [Jb05s](https://github.com/Jb05s)
 
 [1]: https://github.com/rasta-mouse/MiscTools
 [2]: https://rastamouse.me/2018/10/amsiscanbuffer-bypass---part-1/

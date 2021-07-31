@@ -10,7 +10,6 @@ using System.Security.Principal;
 using System.ServiceProcess;
 using System.Threading;
 
-
 namespace CheeseDCOM
 {
 

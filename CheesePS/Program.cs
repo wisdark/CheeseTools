@@ -832,7 +832,8 @@ function Invoke-DecryptAssembly
                         {
                             execute_stub += $"[string[]] $pargs =@(); [object[]] $arguments =@(, $pargs);";
                         }
-                        else {
+                        else
+                        {
                             execute_stub += $"[string[]] $pargs =@(, \"{arguments}\" ); [object[]] $arguments =@(, $pargs);";
                         }
 
